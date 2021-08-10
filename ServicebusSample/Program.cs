@@ -7,14 +7,18 @@ namespace ServicebusSample
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Program p = new Program();
             Console.WriteLine("Hello World!");
-            p.CreateConsumer().GetAwaiter().GetResult();
-            Task.Delay(Timeout.Infinite).GetAwaiter().GetResult();
+            using var logger = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+
+            await p.CreateConsumer();
+
+            await Task.Delay(Timeout.Infinite);
 
         }
+
 
 
 
